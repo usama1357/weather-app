@@ -16,7 +16,7 @@ export default function HomePage() {
     setloading(true);
     await axios
       .get(
-        `http://api.openweathermap.org/data/2.5/weather?lat=${val.lat}&lon=${val.lon}&appid=39ac41ad6d4b5d4498d6bf81de469910`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${val.lat}&lon=${val.lon}&appid=39ac41ad6d4b5d4498d6bf81de469910`
       )
       .then(function (response) {
         console.log(response.data);
@@ -38,7 +38,7 @@ export default function HomePage() {
     if (val !== "" && country !== "") {
       await axios
         .get(
-          `http://api.openweathermap.org/geo/1.0/direct?q=${val},${country}&limit=5&appid=39ac41ad6d4b5d4498d6bf81de469910`
+          `https://api.openweathermap.org/geo/1.0/direct?q=${val},${country}&limit=5&appid=39ac41ad6d4b5d4498d6bf81de469910`
         )
         .then(function (response) {
           if (response.data.length > 0) {
