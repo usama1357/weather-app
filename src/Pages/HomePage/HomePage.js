@@ -9,7 +9,7 @@ import "./HomePage.scss";
 export default function HomePage() {
   const [loading, setloading] = useState(false);
   const [country, setcountry] = useState("");
-  const [results, setresults] = useState([]);
+  const [results, setresults] = useState(null);
   const [render, setrender] = useState(false);
 
   const getResults = async (val) => {
@@ -19,10 +19,7 @@ export default function HomePage() {
         `https://api.openweathermap.org/data/2.5/weather?lat=${val.lat}&lon=${val.lon}&appid=39ac41ad6d4b5d4498d6bf81de469910`
       )
       .then(function (response) {
-        console.log(response.data);
-        let temp = results;
-        temp.push(response.data);
-        setresults(temp);
+        setresults(response.data);
         setloading(false);
       })
       .catch(function (error) {
@@ -33,18 +30,17 @@ export default function HomePage() {
   };
 
   const getData = async (val) => {
-    setloading(true);
-    setresults([]);
+    setresults(null);
+    setrender(!render);
     if (val !== "" && country !== "") {
+      setloading(true);
       await axios
         .get(
           `https://api.openweathermap.org/geo/1.0/direct?q=${val},${country}&limit=5&appid=39ac41ad6d4b5d4498d6bf81de469910`
         )
         .then(function (response) {
           if (response.data.length > 0) {
-            response.data.forEach((element) => {
-              getResults(element);
-            });
+            getResults(response.data[0]);
             setloading(false);
           }
           setloading(false);
@@ -64,7 +60,11 @@ export default function HomePage() {
       <br />
       <br />
       {/* City Search */}
-      <Input_Field getData={(val) => getData(val)} />
+      <Input_Field
+        getData={(val) => {
+          getData(val);
+        }}
+      />
       <div
         style={{
           padding: "20px",
@@ -73,13 +73,9 @@ export default function HomePage() {
           fontWeight: "bold",
         }}
       >
-        {results.length > 0 ? "Results" : "Nothing To Show"}
+        {results ? "Results" : "Nothing To Show"}
       </div>
-      {results.length > 0
-        ? results.map((element, index) => (
-            <WeatherCard key={index} data={element} />
-          ))
-        : null}
+      {results ? <WeatherCard data={results} /> : null}
     </div>
   );
 }
