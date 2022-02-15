@@ -1,6 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-
 import { Route, Switch } from "react-router-dom";
 import HomePage from "./Pages/HomePage/HomePage";
 import Header from "./Components/Header/Header";
