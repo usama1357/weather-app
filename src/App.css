@@ -1,0 +1,9 @@
+@import "~antd/dist/antd.css";
+.App {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(109, 109, 139);
+  /* color: white; */
+  height: 100%;
+  min-height: 100vh;
+}
